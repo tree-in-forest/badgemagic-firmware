@@ -4,6 +4,7 @@
 #include "setup.h"
 #include "CH58xBLE_LIB.h"
 #include "CH58x_common.h"
+#include <time.h>
 
 #ifndef BLE_BUFF_LEN
 #define BLE_BUFF_LEN 27
@@ -43,7 +44,9 @@ void tmos_clockInit(void)
 	sys_safe_access_disable();
 	lsi_calib();
 
-	RTC_InitTime(2020, 1, 1, 0, 0, 0);
+	time_t epoch = LINUX_TIME;
+	struct tm *gmt = gmtime(&epoch);
+	RTC_InitTime(gmt->tm_year + 1900, gmt->tm_mon + 1, gmt->tm_mday, gmt->tm_hour, gmt->tm_min, gmt->tm_sec);
 	TMOS_TimerInit(0);
 }
 

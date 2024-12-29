@@ -137,6 +137,7 @@ CFLAGS += -DUSBC_VERSION=$(USBC_VERSION)
 endif
 
 CFLAGS += -DVERSION='"$(VERSION)"' -DVERSION_ABBR='"$(VERSION_ABBR)"'
+CFLAGS += -DLINUX_TIME=$(LINUX_TIME)
 
 # Generate dependency information
 CFLAGS += -MMD -MP

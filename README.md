@@ -81,6 +81,13 @@ version repeatedly.
 
 ### Build
 
+### git tags
+
+```
+git remote add upstream https://github.com/fossasia/badgemagic-firmware.git
+git fetch --tags upstream
+```
+
 Set the toolchain location, e.g.:
 
 ```sh
@@ -221,5 +228,4 @@ Currently, only the RISC-V version is targeted as it seems the only one produced
 ### RISC-V CH582 Instructions 
 
 Please go to [CH582 Badge Instructions and Reverse Engineering](CH582.md)
-
 

@@ -16,6 +16,8 @@
 #include "ble/profile.h"
 
 #include "usb/usb.h"
+#include <stdio.h>
+#include <time.h>
 
 #define SCAN_F          (2000)
 #define SCAN_T          (FREQ_SYS / SCAN_F)
@@ -454,27 +456,25 @@ int main()
 	TMR0_ITCfg(ENABLE, TMR0_3_IT_CYC_END);
 	PFIC_EnableIRQ(TMR0_IRQn);
 
-	bmlist_init(LED_COLS * 4);
 
 	btn_init();
-	btn_onOnePress(KEY1, change_mode);
-	btn_onOnePress(KEY2, bm_transition);
 	btn_onLongPress(KEY1, change_brightness);
 
 	disp_charging();
-	
-	play_splash(&splash, 0, 0);
 
-	load_bmlist();
+	tmos_clockInit();
 
-	ble_setup();
-
-	spawn_tasks();
-
-	mode = NORMAL;
+	char c[] = "                                                      ";
+	uint16_t py, pmon, pd, ph, pm, ps;
 	while (1) {
-		handle_mode_transition();
-		TMOS_SystemProcess();
+		for (int i = 0; i < 18; i++) {
+			RTC_GetTime(&py, &pmon, &pd, &ph, &pm, &ps);
+			sprintf(c, " %d-%02d-%02d %02d:%02d:%02d GMT            ",py, pmon, pd, ph, pm, ps);
+			for (int j = 5; j >= 0; j--) {
+				fb_puts(c+i, 7, j, 2);
+				DelayMs(50);
+			}
+		}
 	}
 }
 
